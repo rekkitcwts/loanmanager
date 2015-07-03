@@ -55,4 +55,18 @@ class BorrowerModel
     	$this->checkReadPermissions();
     	return Borrower::orderBy('lname')->get($columns);
     }
+
+    public function delete($id) 
+    {
+        $borrower = Borrower::find($id);
+        if ($borrower != null) 
+        {
+            DB::table('borrowers')->where('id', $id)->delete();
+            $borrower->delete();
+        }
+        else 
+        {
+            throw new Exception("Borrower not found.");
+        }
+    }
 }

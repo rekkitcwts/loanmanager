@@ -124,7 +124,9 @@ class BorrowerController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+		$borrower = new BorrowerModel;
+		$rows = $borrower->delete($id);
+		return $this->index();
 	}
 
 

@@ -16,7 +16,34 @@
             <td>{{{ $row->lname . ', ' . $row->fname . ' ' . $row->mname }}}</td>
             <td>{{{ $row->gender }}}</td>
             <td>{{{ date('j F Y, h:i A',strtotime($row->created_at)) }}}</td>
-            <td></td>
+            <td><button id="delete{{$row->id}}" class="btn btn-danger" data-toggle="modal" data-target="#deleteConfirmation{{$row->id}}"><span class="glyphicon glyphicon-remove"></span></button>
+
+            	<!-- Modal for Delete Course-->
+					<div class="modal fade" id="deleteConfirmation{{$row->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+									<h4 class="modal-title" id="myModalLabel">Warning</h4>
+								</div>
+								<div class="modal-body">
+									<p>Are you sure you want to delete this borrower?</p>
+									<p>This cannot be undone.</p>
+								</div>
+								<div class="modal-footer">
+									{{ Form::open(array('url' => 'borrowers/' . $row['id'])) }}
+									{{ Form::hidden('_method', 'DELETE') }}
+									{{ Form::submit('Yes', ['class' => 'btn btn-danger']) }}
+
+									<button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+									{{ Form::close() }}
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- end of Modal for Delete Course -->
+
+            </td>
         </tr>
         @endforeach
     </tbody>
