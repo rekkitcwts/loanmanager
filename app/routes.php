@@ -29,8 +29,18 @@ Route::group(["before" => "auth"], function() {
         "as" => "logout",
         "uses" => "AuthenticationController@getLogout"
     ]);
+    Route::any("/borrowers/addloan/{id}", [
+    "as" => "addloan",
+    "uses" => "BorrowerController@addLoan"
+            ]);
+    Route::any("/borrowers/addloanhelper/{id}", [
+    "as" => "addloanhelper",
+    "uses" => "BorrowerController@addLoanHelper"
+            ]);
 
     Route::resource('borrowers', 'BorrowerController');
    
    
 });
+Route::post('borrowers/update/{id}', 'BorrowerController@update');
+//Route::post('/update/{id}', 'MaterialController@update');

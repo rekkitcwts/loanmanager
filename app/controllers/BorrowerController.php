@@ -100,7 +100,15 @@ class BorrowerController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		//
+		if (Auth::user()) 
+		{
+			$results = Borrower::find($id);
+			return View::make('borrowers.edit')->with('borrower', $results);
+		} 
+		else 
+		{
+			return Redirect::to('/login')->with('message', 'Access denied.');
+		}
 	}
 
 
@@ -112,7 +120,36 @@ class BorrowerController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		$rules = array(
+			'lname' => 'required',
+        	'fname' => 'required',
+        	'mname' => 'required',
+        	'gender' => 'required',
+        	'home_address' => 'required'
+		);
+
+		$attributes = [
+			'lname' => Input::get('lname'),
+        	'fname' => Input::get('fname'),
+      		'mname' => Input::get('mname'),
+        	'gender' => Input::get('gender'),
+        	'home_address' => Input::get('home_address')
+		];
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) 
+		{
+			return Redirect::to('borrowers/' . $id . '/edit')->with('message', 'Required field left blank.');
+		} 
+		else 
+		{
+			$borrower = new BorrowerModel;
+			$borrower->edit($id,$attributes);
+			Session::flash('message', 'Borrower information successfully updated.');
+			return Redirect::to('borrowers/'. $id);
+		}
+		
 	}
 
 
@@ -129,5 +166,18 @@ class BorrowerController extends \BaseController {
 		return $this->index();
 	}
 
+	/** Additional functions.
+	 *
+	 */
+	public function addLoan($id)
+	{
+		$results = Borrower::find($id);
+		return View::make('borrowers.addloan')->with('borrower', $results);
+	}
 
+	public function addLoanHelper($id)
+	{
+		// Note that $id is the borrower's id
+		
+	}
 }

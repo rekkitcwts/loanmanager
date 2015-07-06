@@ -13,10 +13,10 @@
     <tbody>
         @foreach($borrowers as $row)
         <tr>
-            <td>{{{ $row->lname . ', ' . $row->fname . ' ' . $row->mname }}}</td>
+            <td><a href="borrowers/{{ $row->id }}">{{{ $row->lname . ', ' . $row->fname . ' ' . $row->mname }}}</a></td>
             <td>{{{ $row->gender }}}</td>
             <td>{{{ date('j F Y, h:i A',strtotime($row->created_at)) }}}</td>
-            <td><button id="delete{{$row->id}}" class="btn btn-danger" data-toggle="modal" data-target="#deleteConfirmation{{$row->id}}"><span class="glyphicon glyphicon-remove"></span></button>
+            <td><a href="borrowers/{{ $row->id }}/edit" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span> Edit</a> <button id="delete{{$row->id}}" class="btn btn-danger" data-toggle="modal" data-target="#deleteConfirmation{{$row->id}}"><span class="glyphicon glyphicon-remove"></span> Remove</button>
 
             	<!-- Modal for Delete Course-->
 					<div class="modal fade" id="deleteConfirmation{{$row->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
